@@ -1,0 +1,52 @@
+<div style="margin:20px;padding:20px;width:100%;">
+  <h2>{{prjDetail.Title}}</h2>
+  <hr />
+  <div style="width:65%;float: left;">
+    <p>Dynamic component created using <b>ComponentFactoryResolver</b>. Below is the code&#58;</p>
+    <ol>
+      <li>
+        <div>In <b>Component1's HTML</b> file&#58;<br />
+          <code><pre>&#60;ng-container #viewContainer&#62;&#60;/ng-container&#62;</pre></code>
+        </div>
+      </li>
+      <li>
+        <div>In <b>Component1's Typescript (.ts)</b> file&#58;<br />
+          <code><pre>@ViewChild('viewContainer', &#123; read"&#58; ViewContainerRef &#125;) viewContainer&#58; ViewContainerRef;
+injectData&#58; Injector;
+  
+  createTemplate()&#58; void &#123;
+      // pass data to the dynamic component using Injector
+      const prjDetail = new ProjectStructureModel();
+      prjDetail.Title = 'ComponentFactoryResolver example';
+
+      // inject the necessary data
+      this.injectData = Injector.create(&#123;
+        providers: [
+        &#123; provide: ProjectStructureModel, useValue: prjDetail &#125;,
+        &#123; provide: 'ProjectDetails', useFactory: ProjectStructureFactory(), deps: [ProjectStructureModel] &#125;
+        ]
+        &#125;);
+        
+      this.injectData = Injector.create(&#123;
+          providers&#58; [
+            &#123; provide&#58; Content, useValue&#58; contentObject, deps&#58; [Content] &#125;
+          ]
+      &#125;);
+  
+      this.viewContainer.clear();
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(<b>ComponentFactoryResolverComponent</b>);
+      const componentRef = this.viewContainer.createComponent(componentFactory, 0, this.injectData);
+
+      const createdComponent: BaseForm = componentRef.instance;
+
+      // set data to dynamic component's properties
+      createdComponent.ImageUrl = '../../assets/prj_struct0.png';
+  &#125;</pre></code>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <div style="float: left;">
+    <img src="{{ImageUrl}}" width="300">
+  </div>
+</div>

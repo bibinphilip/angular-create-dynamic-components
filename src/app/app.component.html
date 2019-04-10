@@ -1,0 +1,65 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="float:left">
+  <img src="../assets/profile.png">
+</div>
+<div style="text-align:center">
+  <h1>
+    <a href="/">Welcome to {{ title }}!<br>Home</a>
+  </h1>
+  <img width="100" alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+<div>
+  Create dynamic components using the below options provided by Angular:</div>
+<ol>
+  <li><a routerLink="/ComponentFactoryResolver" target="_blank">ComponentFactoryResolver</a></li>
+  <li><a routerLink="/ngComponentOutlet" target="_blank">ngComponentOutlet</a></li>
+</ol>
+<div *ngIf="router.url === '/'" >
+  <div style="float:left;width: 30%;height: 500px;">
+    <div><b>Project Structure</b></div>
+    <img src="assets/prj_struct.png" width="300">
+  </div>
+  <div>
+    <ol>
+      <li>
+        <b>Dynamic Components</b>: There are two dynamic components which inherit from BaseForm model:
+        <ul style="margin:20px;padding-right: 30px;">
+          <li>
+            ComponentFactoryResolverComponent (component-factory-resolver.component)
+          </li>
+          <li>
+            NgComponentOutletComponent (ng-component-outlet.component)
+          </li>
+        </ul>
+      </li>
+      <li><b>App.module.ts</b>: These dynamic components are registered with AppModule <br>
+        <code><pre>
+        ...
+        entryComponents: [
+        ComponentFactoryResolverComponent,
+        NgComponentOutletComponent        
+        ]
+      </pre></code>
+      </li>
+      <li><b>BaseForm</b> model is inherited by the dynamic components. It contains an 'ImageUrl' property that needs to
+        filled by the calling/parent component.</li>
+      <li><b>ProjectStructureModel</b> has 'Title' property that needs to filled by the calling/parent component.</li>
+      <li><b>ProjectStructureFactory</b> is a factory class to inject data & <u>singleton</u> service in the dynamic
+        components. This is used in Component1 & Component2.</li>
+      <li><b>Component1</b> loads ComponentFactoryResolverComponent using ComponentFactoryResolver & createComponent
+        method.<br>The createComponent method returns an instance of the dynamic component.</li>
+      <li><b>Component2</b> loads NgComponentOutletComponent using *ngComponentOutlet directive.</li>
+      <li><b>ComponentInfoService</b> class is an Observable class that is used to pass an instance of the dynamic
+        component.<br>
+        This is used only in NgComponentOutletComponent. In there during the ngOnInit event, this service class passes
+        its instance to the listener i.e. Component2 .</li>
+      <li><b>Routing:</b>
+        <code><pre>
+        &#123; path: 'ComponentFactoryResolver', component: Component1 &#125;,
+        &#123; path: 'ngComponentOutlet', component: Component2 &#125;</pre></code>
+      </li>
+    </ol>
+  </div>
+</div>
+<router-outlet></router-outlet>
