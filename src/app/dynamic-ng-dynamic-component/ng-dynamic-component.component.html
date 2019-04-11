@@ -1,0 +1,53 @@
+<div style="margin:20px;padding:20px;width:100%;">
+  <h2>&#123;&#123;prjDetail.Title&#125;&#125;</h2>
+  <hr />
+  <div style="width:65%;float: left;">
+    <p>Dynamic component created using <b>ngDynamicComponent plugin</b>. Below is the code:</p>
+    <ol>
+      <li>Install the plugin:<br>
+        <code><pre>npm install ng-dynamic-component --save</pre></code></li>
+      <li>
+        <div>In <b>Component3's HTML</b> file:<br />
+          <code><pre>&#60;ndc-dynamic [ndcDynamicComponent]="<b>currentComponent</b>" [ndcDynamicInjector]="injectData"
+          [ndcDynamicInputs]="dynamicComponentInputs" (ndcDynamicCreated)="componentCreated($event)"&#62;
+&#60;/ndc-dynamic&#62;</pre></code>
+        </div>
+        <div>In <b>Component3's Typescript (.ts)</b> file:<br />
+          <code><pre>dynamicComponentInputs: any;
+injectData: Injector;
+<b>currentComponent = NgDynamicComponent;</b>
+
+constructor() &#123;
+      // pass data to the dynamic component using Injector
+      const prjstructDetail = new ProjectStructureModel();
+      prjstructDetail.Title = 'ngDynamicComponent Plugin example';
+
+      // inject the necessary data
+      this.injectData = Injector.create(&#123;
+        providers: [
+          &#123; provide: ProjectStructureModel, useValue: prjstructDetail &#125;,
+          &#123; provide: 'ProjectDetails', useFactory: ProjectStructureFactory(), deps: [ProjectStructureModel] &#125;
+        ]
+      &#125;);
+
+      // set data to dynamic component's properties
+      this.dynamicComponentInputs = &#123;
+        ImageUrl: '../../assets/prj_struct2.png'
+      &#125;;
+&#125;
+</pre></code>
+        </div>
+      </li>
+      <li>
+        <div>In <b> NgDynamicComponent's Typescript (.ts)</b> file:<br />
+          <code><pre>
+constructor(public prjDetail: ProjectStructureModel) &#123; super(); &#125;
+        </pre></code>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <div style="float: left;">
+    <img src="&#123;&#123;ImageUrl&#125;&#125;" width="300">
+  </div>
+</div>

@@ -14,11 +14,12 @@
 <ol>
   <li><a routerLink="/ComponentFactoryResolver" target="_blank">ComponentFactoryResolver</a></li>
   <li><a routerLink="/ngComponentOutlet" target="_blank">ngComponentOutlet</a></li>
+  <li><a routerLink="/ngDynamicComponentPlugin" target="_blank">ngDynamicComponent Plugin</a></li>
 </ol>
 <div *ngIf="router.url === '/'" >
-  <div style="float:left;width: 30%;height: 500px;">
+  <div style="float:left;width: 30%;height: 700px;">
     <div><b>Project Structure</b></div>
-    <img src="assets/prj_struct.png" width="300">
+    <img src="assets/prj_struct.png" width="320">
   </div>
   <div>
     <ol>
@@ -31,10 +32,16 @@
           <li>
             NgComponentOutletComponent (ng-component-outlet.component)
           </li>
+          <li>
+              NgDynamicComponent (ng-dynamic-component.component)
+          </li>
         </ul>
       </li>
       <li><b>App.module.ts</b>: These dynamic components are registered with AppModule <br>
         <code><pre>
+        imports: [...
+          DynamicModule.withComponents([NgDynamicComponent]),
+        ],
         ...
         entryComponents: [
         ComponentFactoryResolverComponent,
@@ -50,6 +57,7 @@
       <li><b>Component1</b> loads ComponentFactoryResolverComponent using ComponentFactoryResolver & createComponent
         method.<br>The createComponent method returns an instance of the dynamic component.</li>
       <li><b>Component2</b> loads NgComponentOutletComponent using *ngComponentOutlet directive.</li>
+      <li><b>Component3</b> loads NgDynamicComponent using the plugin ng-dynamic-component.</li>
       <li><b>ComponentInfoService</b> class is an Observable class that is used to pass an instance of the dynamic
         component.<br>
         This is used only in NgComponentOutletComponent. In there during the ngOnInit event, this service class passes
@@ -57,7 +65,8 @@
       <li><b>Routing:</b>
         <code><pre>
         &#123; path: 'ComponentFactoryResolver', component: Component1 &#125;,
-        &#123; path: 'ngComponentOutlet', component: Component2 &#125;</pre></code>
+        &#123; path: 'ngComponentOutlet', component: Component2 &#125;,
+        &#123; path: 'ngDynamicComponentPlugin', component: Component3 &#125;</pre></code>
       </li>
     </ol>
   </div>
